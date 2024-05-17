@@ -5,5 +5,5 @@ quick guide on how to use the addon:
 
 what you need:
 
--blender
+-blender (i used 3.6)
 -ff-mpeg
