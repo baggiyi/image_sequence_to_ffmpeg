@@ -6,7 +6,7 @@ MAKE SURE NOTHING IS IN YOUR BLENDER OUTPUT FOLDER. BECAUSE IT WILL DELETE THE R
 
 ![final_py_script_image](https://github.com/baggiyi/image_sequence_to_ffmpeg/assets/49596447/687cd522-ec18-44ce-9449-c43e61b766b2)
 
-### Quick Video Example: [https://youtu.be/D0fIHGQfnMM]()
+### Quick Video Example: [youtube/link](https://youtu.be/D0fIHGQfnMM)
 ### Quick Setup:
 
 what you need:
@@ -28,7 +28,7 @@ using the addon:
     -happy rendering/converting!  
 
 (by default it will convert it into prores 422 in mov cantainer. feel free to change it to whatever you like under the addon preferences.)  
-([https://ffmpeg.org/ffmpeg-codecs.html]()) ff-mpeg codecs documentation  
+[ff-mpeg doc/link](https://ffmpeg.org/ffmpeg-codecs.html) ff-mpeg codecs documentation  
 
 ### Addition:
 
