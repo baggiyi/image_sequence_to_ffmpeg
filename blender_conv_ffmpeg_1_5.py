@@ -8,7 +8,7 @@ bl_info = {
     "category": "Render",
     "description": "Directly passes image sequences through FFmpeg after rendering, to give more export possibilities with video codecs and containers",
     "author": "baggiyi",
-    "version": (1, 4)
+    "version": (1, 5)
 }
 
 class FFmpegPreferences(bpy.types.AddonPreferences):
@@ -79,19 +79,37 @@ class FFmpeg_operator(bpy.types.Operator):
                 current_file_format = scene.render.image_settings.file_format
                 print("Current file format:", current_file_format)
                 
-                if current_file_format == ("PNG"):
+                if current_file_format == "PNG":
                     print("PNG used!!!!")
-                    ffmpeg_current_file_format = ("png")
+                    ffmpeg_current_file_format = "png"
                     
-                if current_file_format == ("TIFF"):
+                elif current_file_format == "TIFF":
                     print("TIFF used!!!!")
-                    ffmpeg_current_file_format = ("tif")
+                    ffmpeg_current_file_format = "tif"
+                
+                else:
+                    print("Unsupported file format:", current_file_format)
+                    return
 
                 # Get current output folder
                 output_path = bpy.context.scene.render.filepath
                 print("Current output path:", output_path)
-                blender_output_folder = f'"{output_path}%04d.{ffmpeg_current_file_format}"'
-                FFMPEG_INPUT = f" -i {blender_output_folder}"
+
+                # Find the smallest frame number in the output directory
+                frame_numbers = []
+                for filename in os.listdir(output_path):
+                    if filename.endswith("." + ffmpeg_current_file_format):
+                        frame_num_str = filename.split(".")[0][-4:]
+                        if frame_num_str.isdigit():
+                            frame_numbers.append(int(frame_num_str))
+                
+                if frame_numbers:
+                    min_frame_number = min(frame_numbers)
+                    blender_output_folder = f'"{output_path}%04d.{ffmpeg_current_file_format}"'
+                    FFMPEG_INPUT = f" -start_number {min_frame_number} -i {blender_output_folder}"
+                else:
+                    print("No valid image sequence found.")
+                    return
 
                 # Define output settings
                 FFMPEG_OUTPUT_NAME = current_blend_file_name.replace('.blend', '')
